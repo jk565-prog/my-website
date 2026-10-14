@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html lang="sl"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="Interaktivna matematična analiza slovenskega Lota: verjetnost dobitka, delitev Šestice, pričakovana vrednost in ROI." name="description"/><title>Loto: koliko stane upanje? · Interaktivna analiza</title><style>
+:root{--bg:#0b1120;--panel:#141e31;--panel2:#1b2940;--ink:#eef4ff;--muted:#afc0d6;--line:#304158;--gold:#f2c66d;--blue:#87baff;--red:#ff9494;--green:#78dcc5}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 90% 0%,#22365a 0%,transparent 34%),var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--blue)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(2.65rem,7vw,5rem);line-height:1.04;letter-spacing:-.055em;max-width:950px}h2{font-size:clamp(1.65rem,3.2vw,2.45rem);line-height:1.22;letter-spacing:-.035em}h3{font-size:1.17rem}.wrap{width:min(1120px,calc(100% - 36px));margin:auto}header{padding:28px 0 84px}nav{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:88px}nav .brand{font-weight:800;letter-spacing:.1em;color:var(--gold)}nav a{text-decoration:none;font-size:.88rem}.eyebrow{font-size:.83rem;text-transform:uppercase;letter-spacing:.18em;color:var(--gold);font-weight:750}.lead{font-size:1.25rem;max-width:700px;color:#d9e5f6}.pill{display:inline-block;border:1px solid #6e5b3d;border-radius:99px;padding:6px 13px;color:var(--gold);font-size:.85rem}.hero-number{margin-top:35px;border-left:3px solid var(--gold);padding-left:24px}.hero-number strong{font-size:clamp(2rem,5vw,3.5rem);display:block;line-height:1.1;color:var(--gold)}main section{padding:30px 0 65px;border-top:1px solid var(--line)}p,li{color:#d1dced}ul{padding-left:23px}.statgrid,.grid2,.grid3{display:grid;gap:15px}.statgrid{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:repeat(3,1fr)}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:23px}.card strong.big{font-size:clamp(1.35rem,2.8vw,2rem);font-variant-numeric:tabular-nums;line-height:1.25;display:block;margin:6px 0}.dim,.tiny{color:var(--muted)}.tiny{font-size:.83rem}.label{font-size:.89rem;color:var(--muted);font-weight:650}.math{background:#0d182b;border:1px solid var(--line);border-radius:12px;padding:16px 20px;font-size:clamp(.9rem,2.1vw,1.13rem);overflow:auto;color:#f8dc9e}.panel{background:var(--panel);padding:clamp(17px,3vw,28px);border-radius:22px;border:1px solid var(--line);margin-top:20px}.field{margin-bottom:25px}.field-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline}.field-head strong{font-variant-numeric:tabular-nums;color:var(--gold)}.hint{font-size:.87rem;line-height:1.5;color:var(--muted);margin:4px 0 11px}input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}input[type=number]{width:100%;border:1px solid #536985;border-radius:10px;color:var(--ink);background:#0d1728;padding:10px 11px;font:inherit}label{display:block}input:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}.toggle{display:flex;gap:10px;align-items:center;cursor:pointer}.toggle input{accent-color:var(--gold);width:19px;height:19px}.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:550px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line)}th{font-size:.85rem;color:var(--muted)}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}td input{max-width:160px;margin-left:auto}.metric{font-size:2.4rem;letter-spacing:-.045em;font-weight:800;line-height:1.17;font-variant-numeric:tabular-nums}.negative{color:var(--red)}.positive{color:var(--green)}.barrow{margin:17px 0}.barlabel{display:flex;justify-content:space-between;font-size:.91rem;gap:12px}.bartrack{height:13px;background:#0b1525;border-radius:20px;overflow:hidden;margin-top:7px}.barfill{height:100%;background:var(--blue);border-radius:20px;min-width:0}.divider{border:0;border-top:1px solid var(--line);margin:25px 0}.btn{border:1px solid #667994;background:transparent;color:var(--ink);padding:11px 17px;border-radius:10px;cursor:pointer;font:inherit;font-weight:600}.btn:hover{background:#26374f}.note{padding:16px 19px;border-radius:12px;background:#22314a;border-left:3px solid var(--gold);color:#dde9f6}.fixed{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#101b2c;border:1px solid var(--line);padding:14px 17px;border-radius:10px}.fixed strong{color:var(--gold)}footer{padding:40px 0 65px;border-top:1px solid var(--line);color:var(--muted)}@media(max-width:760px){nav{margin-bottom:60px}.statgrid,.grid2,.grid3{grid-template-columns:1fr}header{padding-bottom:55px}.metric{font-size:2rem}.field-head{align-items:flex-start;flex-direction:column;gap:1px}}@media print{body{background:white;color:#111}p,li,.dim,.tiny{color:#333}.panel,.card{background:white;color:#111;border-color:#aaa}nav{margin-bottom:20px}header{padding-bottom:25px}}
+</style><script>window.MathJax={tex:{displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>
+/* Accessible, touch-friendly help controls */
+.info-wrap{display:inline-flex;position:relative;vertical-align:middle;margin-inline-start:7px;z-index:1}
+.info-trigger{width:26px;height:26px;min-width:26px;border-radius:50%;border:1px solid #7194bd;background:#213550;color:#e8f2ff;font-size:.87rem;font-weight:800;line-height:1;cursor:pointer;touch-action:manipulation}
+.info-trigger:hover,.info-trigger:focus-visible,.info-trigger[aria-expanded=true]{background:#eac477;color:#102034;border-color:#eac477}
+.info-bubble{position:absolute;display:none;z-index:12;left:50%;bottom:calc(100% + 11px);transform:translateX(-50%);width:min(310px,75vw);padding:12px 14px;border-radius:12px;border:1px solid #6d87a7;background:#243a56;box-shadow:0 10px 28px #0009;color:#f5f9ff;font-weight:400;font-size:.86rem;line-height:1.5;text-align:left;white-space:normal;pointer-events:none}
+.info-wrap:hover .info-bubble,.info-wrap:focus-within .info-bubble,.info-wrap.is-open .info-bubble{display:block}
+.math{font-size:1rem;text-align:center;max-width:100%;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.math mjx-container{max-width:100%;margin:7px auto!important;min-width:min-content}
+.field-head label,.card .label{display:inline-block}
+@media(max-width:760px){
+ body{font-size:15px;line-height:1.58} .wrap{width:calc(100% - 28px)}
+ header{padding-top:18px;padding-bottom:40px}nav{margin-bottom:45px;flex-wrap:wrap;gap:10px}nav a{min-height:44px;display:flex;align-items:center}
+ h1{font-size:clamp(2.25rem,12vw,4rem)}h2{font-size:clamp(1.55rem,7vw,2.25rem)}.lead{font-size:1.06rem}
+ main section{padding:29px 0 43px}.card{padding:17px;border-radius:14px}.panel{padding:17px 13px;border-radius:16px}
+ .grid2,.grid3,.statgrid{grid-template-columns:minmax(0,1fr)}.math{padding:13px 10px;font-size:.82rem}
+ .field-head{gap:7px}.field-head strong{font-size:1.1rem}.field{margin-bottom:28px}
+ input[type=range]{min-height:44px;touch-action:pan-y}input[type=number]{min-height:46px;font-size:16px}
+ .btn{min-height:48px;width:100%}.toggle{align-items:flex-start;min-height:44px;gap:12px}
+ .toggle input{flex-shrink:0;margin-top:5px}.fixed{flex-wrap:wrap}
+ /* Mobile tables are stacked cards with full-size tap targets */
+ .tablewrap{overflow:visible}table{min-width:0;display:block}thead{display:none}tbody{display:grid;gap:10px}tr{display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:13px;background:#101b2e}
+ td{padding:4px 0;border:0}td:first-child{font-weight:700;font-size:1.1rem}td:nth-child(2){text-align:right}td:last-child{grid-column:1/-1}td:last-child:before{content:'Dobitek na kombinacijo (€)';display:block;text-align:left;font-size:.8rem;color:var(--muted);margin-bottom:5px}td input{max-width:none;width:100%}
+ .barlabel{font-size:.84rem}.barlabel span{max-width:70%}.info-bubble{position:fixed;left:14px;right:14px;top:auto;bottom:calc(16px + env(safe-area-inset-bottom));transform:none;width:auto;max-height:45dvh;overflow:auto;box-shadow:0 0 0 100vmax #0005,0 12px 45px #000a;pointer-events:auto}
+ .info-wrap{position:static}.info-wrap.is-open{z-index:90}.metric{font-size:1.85rem}
+}
+@media(max-width:390px){.wrap{width:calc(100% - 22px)}.panel{padding:14px 11px}.card strong.big{overflow-wrap:anywhere;font-size:1.55rem}.math{font-size:.72rem}.statgrid .big{font-size:1.6rem}}
+@media(hover:none){.info-wrap:hover:not(.is-open) .info-bubble{display:none}.info-wrap:focus-within .info-bubble{display:none}.info-wrap.is-open .info-bubble{display:block}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style><style>
+.prize-feature{display:grid;grid-template-columns:minmax(240px,.85fr) minmax(0,1.15fr);gap:24px;align-items:center;background:linear-gradient(120deg,#182943,#111d31);border:1px solid #46607c;border-left:4px solid var(--gold);border-radius:17px;padding:24px;margin:22px 0 30px}
+.prize-feature p{margin:0}.prize-overline{display:block;letter-spacing:.055em;color:var(--gold);font-size:.76rem;font-weight:800}.prize-grand{display:block;font-size:clamp(1.75rem,3vw,2.6rem);line-height:1.25;margin:12px 0 6px;color:var(--ink);font-variant-numeric:tabular-nums}.prize-subtitle{display:block;color:var(--muted);font-size:.88rem}.prize-examples{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0 24px}.prize-example{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px;display:flex;flex-direction:column;gap:5px}.prize-kind{color:var(--gold);font-size:.9rem;font-weight:800}.prize-example strong{font-size:clamp(1.06rem,1.5vw,1.4rem);overflow-wrap:anywhere;font-variant-numeric:tabular-nums}.prize-example small{color:var(--muted);font-size:.75rem}
+@media(max-width:760px){.prize-feature{grid-template-columns:minmax(0,1fr);padding:18px;gap:15px}.prize-examples{grid-template-columns:repeat(2,minmax(0,1fr))}.prize-example{padding:13px}}
+@media(max-width:390px){.prize-examples{grid-template-columns:minmax(0,1fr)}}
+</style><style>
+.prize-tablewrap{margin:18px 0 24px}
+.prize-table{width:100%;min-width:0;border-collapse:separate;border-spacing:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.prize-table thead th{background:#101b2d;color:#b7c7dc;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;padding:14px 16px;border-bottom:1px solid var(--line)}
+.prize-table tbody td{padding:16px;border-bottom:1px solid rgba(48,65,88,.75)}
+.prize-table tbody tr:last-child td{border-bottom:0}
+.prize-table tbody td:first-child{font-weight:800;color:var(--gold)}
+.prize-table tbody td:nth-child(2){font-weight:800;font-size:1.07rem;color:var(--ink)}
+.prize-table tbody td:last-child{color:var(--muted)}
+.panel-actions{display:flex;justify-content:flex-start;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
+@media(max-width:760px){.panel-actions .btn{width:100%}}
+</style><style>
+/* Detailed EV ledger: horizontal scrolling on smaller devices instead of broken cell stacking */
+.detailed-tablewrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:15px;margin-top:20px}
+.detailed-table{min-width:1060px;width:100%;border-collapse:collapse}
+.detailed-table th,.detailed-table td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.detailed-table th.num,.detailed-table td.num{text-align:right}
+.detailed-table thead th{background:#0f1b2f;vertical-align:bottom;line-height:1.35;font-size:.81rem}
+.detailed-table thead th:nth-child(1){min-width:115px}.detailed-table thead th:nth-child(2){min-width:170px}.detailed-table thead th:nth-child(3){min-width:185px}.detailed-table thead th:nth-child(4){min-width:210px}.detailed-table thead th:nth-child(5){min-width:230px}
+.detailed-table input{width:150px;max-width:100%;font-size:.96rem;text-align:right}
+.detailed-table .computed-value{font-variant-numeric:tabular-nums;white-space:nowrap}
+.detailed-table tfoot th{border-top:2px solid #6882a6;color:var(--gold);background:#192a43;font-weight:800}
+.detailed-table tfoot th:last-child{color:var(--ink);font-size:1.14rem;white-space:nowrap}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:760px){.detailed-table{display:table;min-width:1060px}.detailed-table thead{display:table-header-group}.detailed-table tbody{display:table-row-group}.detailed-table tfoot{display:table-footer-group}.detailed-table tr{display:table-row;background:transparent;border:0;padding:0}.detailed-table td{display:table-cell;padding:12px 14px;border-bottom:1px solid var(--line);font-size:.92rem}.detailed-table td:first-child{font-size:.95rem}.detailed-table td:nth-child(2){text-align:right}.detailed-table td:last-child{grid-column:auto}.detailed-table td:last-child:before{display:none}.detailed-table td input{width:140px;max-width:140px}.detailed-table th{display:table-cell}.detailed-tablewrap{position:relative}.detailed-tablewrap::after{content:none}}
+</style><style>
+/* Popover displayed in document viewport so wide table cannot crop it. */
+.detailed-table .info-wrap .info-bubble{display:none!important}
+#floatingTableHelp{position:fixed;z-index:999999;display:none;width:min(420px,calc(100vw - 28px));max-height:min(55vh,340px);overflow:auto;border:1px solid #82a3cc;border-radius:13px;padding:14px 17px;background:#263d5c;color:#f4f8ff;box-shadow:0 14px 45px rgba(0,0,0,.65);font-size:14px;line-height:1.55;text-align:left;white-space:normal;pointer-events:none}
+#floatingTableHelp.is-visible{display:block}
+@media(max-width:760px){#floatingTableHelp{bottom:calc(12px + env(safe-area-inset-bottom));left:14px!important;top:auto!important;max-height:45dvh;pointer-events:auto}}
+.detailed-table td.computed-value,.detailed-table tfoot .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+</style><style>.linked-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:22px 0}.linked-controls .field{margin-bottom:0}.linked-controls .field-head{align-items:flex-start;flex-direction:column;gap:3px}.linked-controls .field-head strong{color:var(--gold)}@media(max-width:760px){.linked-controls{grid-template-columns:1fr;gap:23px}}</style><style>.c-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding:18px;margin:18px 0;background:#101b2d;border:1px solid var(--line);border-radius:15px}.c-controls .field{margin:0}.c-controls .field-head{display:block}.c-controls label{font-size:.87rem;font-weight:700}.c-controls input{margin-top:9px}@media(max-width:760px){.c-controls{grid-template-columns:1fr;gap:22px}}</style><style>
+/* Keep the selected slider value visually separate from its label. */
+.c-controls .field-head{display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+.c-controls .field-head label,.linked-controls .field-head label{display:block;max-width:100%}
+.c-controls .field-head strong,.linked-controls .field-head strong{display:block;max-width:100%;margin-top:3px;font-variant-numeric:tabular-nums}
+</style><style id="consistent-slider-layout">
+/* Identical slider layout in all calculator sections. */
+.linked-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:start;margin:22px 0 26px}
+.linked-controls .field{min-width:0;margin:0;display:flex;flex-direction:column;align-items:stretch}
+.linked-controls .field-head{display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin-bottom:0}
+.linked-controls .field-head label{display:block;width:100%;max-width:100%;font-weight:650;line-height:1.4}
+.linked-controls .field-head strong{display:block;margin:0;color:var(--gold);font-size:1.1rem;font-weight:750;line-height:1.4;font-variant-numeric:tabular-nums}
+.linked-controls .field>.hint{margin:9px 0 14px;line-height:1.55}
+.linked-controls .field>input[type=range]{display:block;width:100%;margin:0;min-height:25px}
+.linked-controls .field>input[type=range]+.hint{margin:14px 0 0}
+@media(max-width:760px){.linked-controls{grid-template-columns:minmax(0,1fr);gap:25px}.linked-controls .field>input[type=range]{min-height:44px}}
+</style><style>
+.fund-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0}.fund-stats .big{overflow-wrap:anywhere}.fund-stats .hint{margin:7px 0 0}.fund-breakdown{display:grid;gap:15px;margin:23px 0}.fund-row-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:5px}.fund-row-head strong{font-variant-numeric:tabular-nums}.fund-amounts{border:1px solid var(--line);background:#101b2e;border-radius:13px;padding:16px 18px;margin-bottom:20px}.fund-amounts p{margin:0 0 10px}.fund-amounts p:last-child{margin:0}@media(max-width:760px){.fund-stats{grid-template-columns:1fr}.fund-row-head{font-size:.9rem}.fund-amounts{padding:13px}}
+</style><style>
+/* Linked inputs are presented as a single visual control unit. */
+.controls-frame{padding:clamp(15px,2.3vw,25px);border:1px solid #3a506d;border-radius:17px;background:#0e1a2e;margin:18px 0 23px}
+.controls-frame .linked-controls{margin:0 0 10px;padding:0;border:0;background:transparent}
+.controls-action-row{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding-top:15px;border-top:1px solid #2c405a}
+.controls-action-row .toggle{margin:0;flex:1 1 320px}
+.controls-action-row .btn{flex:0 0 auto;white-space:nowrap}
+@media(max-width:760px){.controls-frame{padding:15px 13px}.controls-action-row{align-items:stretch}.controls-action-row .toggle{flex:1 1 100%}.controls-action-row .btn{width:100%}}
+</style><style>
+.fund-story-intro{margin:18px 0 0;color:#d1dced}
+.fund-story-card{display:flex;flex-direction:column;gap:8px;min-width:0}
+.fund-story-card .label{font-size:1rem;color:var(--ink);font-weight:750;line-height:1.4}
+.fund-story-card .big{margin:5px 0 0;font-size:clamp(2rem,3vw,2.7rem)}
+.fund-step{font-weight:800;font-size:.76rem;text-transform:uppercase;letter-spacing:.095em;color:var(--gold)}
+.fund-example{margin:0;font-size:.97rem;color:var(--ink)}
+.fund-story-card .hint{margin:4px 0 0;line-height:1.55}
+@media(max-width:760px){.fund-story-card{gap:7px}}
+</style><style>.carry-details{margin:16px 0 22px;padding:14px 17px;border:1px solid var(--line);border-radius:13px;background:#101b2e}.carry-details summary{cursor:pointer;font-weight:750;color:var(--gold)}.carry-details[open] summary{margin-bottom:12px}.carry-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.carry-item{font-size:.85rem;color:var(--muted)}.carry-item input{display:block;width:100%;margin-top:6px;padding:10px;border:1px solid #536985;border-radius:9px;background:#0d1728;color:var(--ink);font:inherit}@media(max-width:760px){.carry-grid{grid-template-columns:1fr}.carry-item input{font-size:16px;min-height:44px}}</style><style id="fit-prize-table">
+/* Fit all five columns inside the calculator on desktop. */
+.table-scroll-hint{display:none}
+@media(max-width:1000px){.table-scroll-hint{display:block}}
+.detailed-tablewrap{width:100%;max-width:100%;min-width:0;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#87baff #0f1b2f}
+.detailed-table{width:100%;min-width:0;table-layout:fixed;border-collapse:collapse}
+.detailed-table thead th:nth-child(1){width:13%;min-width:0}
+.detailed-table thead th:nth-child(2){width:16%;min-width:0}
+.detailed-table thead th:nth-child(3){width:22%;min-width:0}
+.detailed-table thead th:nth-child(4){width:22%;min-width:0}
+.detailed-table thead th:nth-child(5){width:27%;min-width:0}
+.detailed-table th,.detailed-table td{padding:12px 9px;overflow-wrap:anywhere}
+.detailed-table th{font-size:.79rem}
+.detailed-table td.num{font-size:clamp(.78rem,1.1vw,.95rem);font-variant-numeric:tabular-nums;white-space:nowrap}
+.detailed-table tfoot th:last-child{font-size:1rem;white-space:normal;overflow-wrap:anywhere}
+@media(max-width:1000px){
+ .detailed-table{min-width:940px;table-layout:fixed}
+ .detailed-tablewrap{overscroll-behavior-x:contain}
+}
+</style><style id="compact-carry-sliders">
+.carry-grid{gap:14px}
+.carry-item{min-width:0;border:1px solid #31445f;border-radius:12px;background:#14233a;padding:12px 13px;display:flex;flex-direction:column;gap:5px}
+.carry-item>label:first-child{font-weight:750;color:var(--ink)}
+.carry-amount{color:var(--gold);font-variant-numeric:tabular-nums;font-size:1.03rem}
+.carry-item .carry-mini-slider{width:100%;height:22px;min-height:22px;margin:2px 0 6px;accent-color:var(--gold)}
+.carry-item .carry-exact-label{color:var(--muted);font-size:.77rem}
+.carry-item .carry-manual{font-size:.91rem;min-height:36px;margin:0;padding:6px 9px;color:var(--ink);background:#0d1728}
+@media(max-width:760px){.carry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.carry-item .carry-mini-slider{min-height:34px}}
+@media(max-width:460px){.carry-grid{grid-template-columns:1fr}}
+</style><style>
+.other-sharing{margin-top:27px;padding-top:20px;border-top:1px solid var(--line)}
+.other-sharing h4{margin:0 0 9px;font-size:1.13rem}
+.share-detail{border:1px solid var(--line);border-radius:12px;background:#101b2d;margin:10px 0;overflow:hidden}
+.share-detail summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 17px;font-weight:700;min-height:48px}
+.share-detail summary::-webkit-details-marker{display:none}.share-detail summary::after{content:'+';color:var(--gold);font-size:1.35rem;line-height:1}
+.share-detail[open] summary::after{content:'−'}.share-detail[open] summary{border-bottom:1px solid var(--line)}
+.share-detail .share-content{padding:15px 17px}.share-detail .share-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.share-detail .share-stat{padding:13px;background:var(--panel);border:1px solid var(--line);border-radius:10px;min-width:0}
+.share-detail .share-stat span{display:block;color:var(--muted);font-size:.81rem;line-height:1.35}
+.share-detail .share-stat strong{display:block;font-size:clamp(1.1rem,2vw,1.5rem);color:var(--gold);margin-top:8px;overflow-wrap:anywhere}
+@media(max-width:760px){.share-detail .share-stats{grid-template-columns:1fr}.share-detail summary{padding:14px}}
+</style></head><body><header class="wrap"><nav><span class="brand">LOTO / MATEMATIKA</span><a href="#kalkulator">Odpri kalkulator ↓</a></nav><div class="eyebrow">Informacije za potencialne igralce</div><h1>Koliko stane <span style="color:var(--gold)">upanje?</span></h1><p class="lead">Loto omogoča izjemen dobitek za majhno vplačilo. A možnost zmage, delitev nagrad in pričakovana izguba povedo povsem drugo zgodbo.</p><span class="pill">Slovenski Loto · osnovna igra brez Loto plus in Jokerja</span><div class="hero-number"><span class="dim">Možnost zadetka Šestice z eno kombinacijo</span><strong>1 : 7.059.052</strong><span class="dim">Le približno 0,0000142 %</span></div></header><main class="wrap">
+<section id="pravila"><div class="eyebrow">01 / Pravila</div><h2>Kako deluje Loto?</h2><p>Igralec izbere <b>šest različnih številk od 1 do 44</b>. Posamezna kombinacija stane <b>0,60 €</b>. Ob sredah in nedeljah izžrebajo šest glavnih številk in eno dodatno številko. Obstaja osem vrst dobitkov: 6, 5 + 1, 5, 4 + 1, 4, 3 + 1, 3 in 0 + 1.</p><div class="statgrid"><div class="card"><div class="label">Cena kombinacije</div><strong class="big">0,60 €</strong><span class="tiny">Brez dodatnih iger</span></div><div class="card"><div class="label">Možnih kombinacij</div><strong class="big">7.059.052</strong><span class="tiny">Matematični izraz <span class="tex" data-fallback="44 izberemo 6">\(\binom{44}{6}\)</span></span></div><div class="card"><div class="label">Dobitnih kategorij</div><strong class="big">8</strong><span class="tiny">Od Šestice do 0 + 1</span></div></div><p style="margin-top:20px">Če Šestice nihče ne zadene, se sklad prenese v prihodnje žrebanje. <b>Ne prenese pa se že plačana kombinacija</b>, razen če je igralec vnaprej plačal tudi naslednje kroge.</p></section>
+<section><div class="eyebrow">02 / Verjetnosti</div><h2>Dobitek je redek. Delitev je realna.</h2>
+<p>Vsaka veljavna kombinacija ima enako možnost zadetka Šestice.</p>
+<div class="math"><span class="tex" data-fallback="P(6) = 1 / 7.059.052">\[\displaystyle P(6)=\frac{1}{\binom{44}{6}}=\frac{1}{7\,059\,052}\]</span></div>
+<p style="margin-top:18px">Ko več ljudi kupuje listke, raste možnost, da pravilne številke izbere več kot en listek. Dobitek si v tem primeru razdelijo dobitne kombinacije — ne nujno različni ljudje.</p>
+<p>Če imamo <i>N</i> drugih listkov, je verjetnost, da si ob lastnem zadetku Šestico delimo vsaj z enim drugim listkom:</p>
+<div class="math"><span class="tex" data-fallback="P(delitev | moja Šestica) = 1 − (1 − 1 / 7.059.052)^N">\[\displaystyle P(\text{delitev}\mid\text{moja Šestica})=1-\left(1-\frac{1}{7\,059\,052}\right)^{N}\]</span></div>
+<p style="margin-top:18px">Zgornji model predpostavlja, da drugi igralci kombinacije izbirajo <b>naključno in neodvisno</b>. Resnični igralci pogosto izberejo podobne številke, denimo rojstne dneve, kar lahko spremeni tveganje delitve posamezne kombinacije.</p></section>
+<section id="dobitki"><div class="eyebrow">03 / Povprečni dobitki</div><h2>Koliko v povprečju dobimo?</h2>
+<p>Pri Lotu je pomembno ločiti <b>skupni sklad za posamezno vrsto dobitka</b> od <b>zneska na eno dobitno kombinacijo</b>. Igralec lahko vplača več dobitnih kombinacij, zato povprečje na kombinacijo ni nujno povprečje na človeka.</p>
+<div class="prize-feature"><div><span class="prize-overline">ŠESTICA · povprečje petih obravnavanih dobitkov v letu 2026</span><strong class="prize-grand">886.259,78 €</strong><span class="prize-subtitle">na dobitno kombinacijo, pred davkom</span></div><p>To je aritmetično povprečje <b>petih opaženih izplačil</b>, ne dolgoročna statistika in ne obljubljeni znesek naslednjega zadetka. Če v nekem žrebanju Šestico zadene več kombinacij, se razpoložljivi sklad mednje razdeli. Primer: pri skladu 900.000 € dve dobitni kombinaciji dobita po 450.000 €, tri pa po 300.000 € pred davkom.</p></div>
+<h3>Koliko običajno prinesejo drugi zadetki?</h3>
+<p>Spodnji zneski kažejo <b>ilustrativna povprečna izplačila na dobitno kombinacijo</b> iz omejenega vzorca že obravnavanih žrebanj (4. in 11. oktober 2026). Zneski niso zagotovljeni in niso dolgoročna uradna povprečja. Pri kategoriji 5 + 1 je v tem vzorcu samo en izplačan dobitek.</p>
+<div class="tablewrap prize-tablewrap"><table class="prize-table"><thead><tr><th>Kategorija</th><th class="num">Običajni znesek na dobitno kombinacijo</th><th>Opomba</th></tr></thead><tbody><tr><td>5 + 1</td><td class="num">6.851,90 €</td><td>Ocena iz majhnega vzorca</td></tr><tr><td>Petica (5)</td><td class="num">716,90 €</td><td>Ocena iz majhnega vzorca</td></tr><tr><td>4 + 1</td><td class="num">117,55 €</td><td>Ocena iz majhnega vzorca</td></tr><tr><td>Štirica (4)</td><td class="num">12,10 €</td><td>Ocena iz majhnega vzorca</td></tr><tr><td>3 + 1</td><td class="num">6,72 €</td><td>Ocena iz majhnega vzorca</td></tr><tr><td>Trojka (3)</td><td class="num">2,34 €</td><td>Ocena iz majhnega vzorca</td></tr><tr><td>0 + 1</td><td class="num">1,20 €</td><td>Fiksni znesek</td></tr></tbody></table></div>
+<div class="note"><b>Ali so manjši dobitki fiksni?</b> Pri <b>osnovnem Lotu</b> ne: tudi zneski 5 + 1, 5, 4 + 1, 4, 3 + 1 in 3 se spreminjajo glede na sklad in število dobitnih kombinacij. <b>Fiksen je samo dobitek 0 + 1 (1,20 €)</b>. Zato več dobitnih kombinacij v isti kategoriji običajno pomeni manjši znesek na posamezno kombinacijo, kadar si delijo isti sklad. Pri <b>Lotu plus</b> so nižje kategorije praviloma fiksne — tega ne smemo zamenjati z osnovnim Lotom.</div>
+<p class="hint">V interaktivnem kalkulatorju se skladi izračunajo iz deležev tekočih vplačil po pravilih igre in po želji vnesenih prenosov iz prejšnjih krogov. Pri Šestici velja tudi garantiran sklad ob zadetku. Vir: <a href="https://www.loterija.si/loto/vse-o-igri" rel="noopener noreferrer" target="_blank">Loterija Slovenije – vse o igri</a> in <a href="https://www.loterija.si/loto/rezultati" rel="noopener noreferrer" target="_blank">rezultati žrebanj</a>.</p>
+</section>
+<section><div class="eyebrow">04 / Pričakovana donosnost</div><h2>Kaj je ROI?</h2><p>Pričakovana vrednost izplačila (EV) je vsota možnih izplačil, pomnoženih z njihovimi verjetnostmi. Strošek listka odštejemo šele pri izračunu neto rezultata oziroma ROI. ROI pove pričakovani rezultat kot delež vplačila.</p><div class="math"><span class="tex" data-fallback="EV = vsota verjetnosti × izplačilo">\[\displaystyle \operatorname{EV}=\sum_{i=1}^{8}P_i\cdot D_i\]</span></div><div class="math" style="margin-top:12px"><span class="tex" data-fallback="ROI = (EV − cena) / cena × 100 %">\[\displaystyle \operatorname{ROI}=\frac{\operatorname{EV}-c}{c}\cdot100\%\]</span></div><p style="margin-top:20px"><b>Negativen ROI</b> ne pomeni, da nihče ne zadene. Pomeni, da je povprečni matematični izid pri ponavljanju igre finančno neugoden. Šestica ima lahko visoko vrednost, a izjemno majhno verjetnost.</p></section>
+<section id="kalkulator"><div class="eyebrow">05 / Interaktivni model</div><h2>Preizkusi predpostavke</h2><p>Spremeni število vplačanih kombinacij, prenos sklada Šestice, svoje vplačilo in po potrebi prenose drugih skladov. Pravila <b>6 od 44</b> so fiksna, ker model predstavlja dejansko slovensko osnovno igro Loto.</p><div class="panel"><h3>A. Nastavitve žrebanja</h3><div class="field"><div class="field-head"><label for="tickets">Skupno število vplačanih kombinacij<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Skupno število vplačanih kombinacij" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Skupno število vseh kupljenih kombinacij v tem žrebanju, vključno s tvojimi. Ni enako številu igralcev. Višje število poveča možnost delitve Šestice. Število je scenarij, ne podatek o dejanski prodaji.</span></span></label><strong id="ticketsLabel"></strong></div><p class="hint">Koliko vseh posameznih kombinacij za to žrebanje so kupili igralci, vključno s tvojimi. To ni nujno število različnih ljudi: ena oseba lahko kupi več kombinacij. Višja vrednost poveča možnost, da si bo dobitni listek delil Šestico z drugimi.</p><input id="tickets" max="10000000" min="100000" step="100000" type="range" value="1000000"/></div><div class="field"><div class="field-head"><label for="carry">Prenos sklada Šestice iz prejšnjega kroga</label><strong id="carryLabel"></strong></div><p class="hint">Vneseni prenos sklada Šestice iz prejšnjega kroga (privzeta vrednost je zgolj primer, ne preverjeni podatek). Prišteje se 31 % tekočega sklada za dobitke, izračunanega iz novih vplačil. Povezane nastavitve v drugih razdelkih se posodobijo samodejno.</p><input aria-label="Preneseni sklad Šestice" id="carry" max="10000000" min="0" step="10000" type="range" value="800000"/></div><div class="note" style="margin:-7px 0 24px">Sklad Šestice za primer zadetka: <b id="computedJackpotA"></b></div><div class="field"><div class="field-head"><label for="mine">Število tvojih kombinacij<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Število tvojih kombinacij" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Koliko različnih kombinacij kupiš v enem žrebanju. Višje število poveča skupni vložek in verjetnost vsaj ene Šestice, ne pa verjetnosti zadetka posamezne kombinacije.</span></span></label><strong id="mineLabel"></strong></div><p class="hint">Koliko <b>različnih</b> kombinacij sam kupiš za en krog. Vsaka dodatna kombinacija poveča ceno in možnost vsaj enega zadetka Šestice. Če kupiš isto kombinacijo dvakrat, imaš dve dobitni udeležbi, ne pa dveh različnih možnosti zadetka.</p><input id="mine" max="1000" min="1" step="1" type="range" value="1"/></div><div class="grid2"><div class="field"><span class="label">Cena ene kombinacije (€)<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Cena ene kombinacije (€)" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Cena ene kombinacije je fiksno 0,60 €. Iz te cene so izračunani vložek, ROI in skladi po pravilih igre.</span></span></span><p class="hint">Fiksna cena ene kombinacije osnovnega slovenskega Lota. Enaka cena se uporablja za vložek, izračun ROI in sklade dobitkov.</p><div class="fixed"><span>Cena kombinacije</span><strong>0,60 € 🔒</strong></div></div><div class="field"><span class="label">Števila v igri — fiksno<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Števila v igri — fiksno" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Pravila slovenskega Lota so fiksna: 6 različnih številk od 1 do 44. Zato je število možnih Šestic vedno 7.059.052.</span></span></span><p class="hint">Slovenski Loto uporablja šest izbranih številk od 1 do 44; teh pravil ni mogoče spreminjati. Možnih je 7.059.052 kombinacij.</p><div class="fixed"><span>Pravila igre</span><strong>6 od 44 🔒</strong></div></div></div><label class="toggle"><input checked="" id="tax" type="checkbox"/> Upoštevaj 15 % davka pri posameznem dobitku od 300 € naprej<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Upoštevaj 15 % davka pri posameznem dobitku od 300 € naprej" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Preklopi na približni izračun po davku. Davek se obračuna na posamezen dobitek v višini najmanj 300 €, vključno s posameznimi deleži pri delitvi Šestice.</span></span></label><p class="hint">Davek se obračuna na posamezen dejanski dobitek. Pri deljeni Šestici je pomemben znesek posameznega deleža.</p><p class="hint">Osnovni zbrani sklad Šestice = prenos + (vplačane kombinacije × 0,60 € ÷ 1,10 × 57 % × 31 %). Za primer zadetka model uporabi najmanj 400.000 € garantirane vrednosti; razlika do garancije ne pomeni dodatnega prenosa v naslednji krog. Posebna povečanja in prilagoditve iz rezervnega sklada niso v celoti modelirani.</p><div class="panel-actions" style="margin-top:18px"><button class="btn reset-control" type="button">↺ Ponastavi predpostavke</button></div></div>
+<div class="panel"><h3>B. Tvoj rezultat</h3><div class="controls-frame"><div aria-label="Povezane nastavitve rezultata" class="linked-controls">
+<div class="field"><div class="field-head"><label for="ticketsD">Skupno število vplačanih kombinacij</label><strong id="ticketsLabelD"></strong></div><p class="hint">Enaka skupna nastavitev v vseh razdelkih; vpliva na velikost skladov in možnost delitve dobitkov.</p><input id="ticketsD" max="10000000" min="100000" step="100000" type="range" value="1000000"/></div>
+<div class="field"><div class="field-head"><label for="carryD">Prenos sklada Šestice iz prejšnjega kroga</label><strong id="carryLabelD"></strong></div><p class="hint">Preneseni znesek prištejemo deležu Šestice iz tekočih vplačil; ob zadetku velja najmanj 400.000 € garantiranega sklada.</p><input id="carryD" max="10000000" min="0" step="10000" type="range" value="800000"/><p class="hint">Sklad Šestice za primer zadetka: <b id="computedJackpotD"></b></p></div>
+<div class="field"><div class="field-head"><label for="mineD">Število tvojih različnih kombinacij</label><strong id="mineLabelD"></strong></div><p class="hint">Spreminja tvoj skupni vložek, skupna pričakovana izplačila in možnost zadetka.</p><input id="mineD" max="1000" min="1" step="1" type="range" value="1"/></div>
+</div><div class="controls-action-row"><label class="toggle tax-mirror"><input checked="" id="taxD" type="checkbox"/> Upoštevaj 15 % davka na posamezne dobitke od 300 € naprej</label><button class="btn reset-control" type="button">↺ Ponastavi predpostavke</button></div></div><div class="grid3"><div class="card"><span class="label">Pričakovani ROI<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Pričakovani ROI" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Pričakovana odstotna donosnost glede na ceno listka: (pričakovano izplačilo − vložek) / vložek × 100 %. Negativna vrednost pomeni matematično pričakovano izgubo.</span></span></span><strong class="big" id="roi"></strong></div><div class="card"><span class="label">Pričakovano izplačilo / kombinacijo<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Pričakovano izplačilo / kombinacijo" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Vsota vseh možnih izplačil, uteženih z verjetnostjo posamezne dobitne kategorije. To ni znesek, ki bi ga igralec prejel ob vsakem nakupu.</span></span></span><strong class="big" id="ev"></strong></div><div class="card"><span class="label">Možnost Šestice z vsemi tvojimi različnimi kombinacijami<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Možnost Šestice z vsemi tvojimi različnimi kombinacijami" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Ker izbereš različne kombinacije, je verjetnost vsaj ene Šestice enaka številu tvojih kombinacij, deljenemu s 7.059.052.</span></span></span><strong class="big" id="mineChance"></strong></div></div><div class="grid2" style="margin-top:15px"><div class="card"><div class="label">Skupni vložek<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Skupni vložek" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Število tvojih kombinacij pomnoženo s ceno ene kombinacije. To je dejanski strošek simuliranega nakupa.</span></span></div><strong class="big" id="investment"></strong><div class="label">Pričakovana izplačila<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Pričakovana izplačila" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Pričakovano izplačilo ene kombinacije pomnoženo s številom tvojih kombinacij. Gre za statistično pričakovanje in ne zagotovljeno vračilo.</span></span></div><strong class="big" id="returns"></strong></div><div class="card"><div class="label">Pričakovani neto rezultat<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Pričakovani neto rezultat" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Pričakovana izplačila minus skupni vložek. Negativni rezultat pomeni pričakovano izgubo.</span></span></div><strong class="big" id="netResult"></strong><div class="label"><span id="winShareLabel">Pričakovana Šestica ob zadetku (pred davkom)</span><span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Pričakovana Šestica ob zadetku (pred davkom)" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Povprečno izplačilo ob zadetku ene Šestice, pri čemer se upošteva možna delitev nagradnega sklada. To ni napoved dejanskega dobitka.</span></span></div><strong class="big" id="winShare"></strong></div></div><div style="margin-top:22px"><div class="barrow"><div class="barlabel"><span>Vložek</span><b id="investBarLabel"></b></div><div class="bartrack"><div class="barfill" style="width:100%;background:#72849f"></div></div></div><div class="barrow"><div class="barlabel"><span>Pričakovano izplačilo</span><b id="returnBarLabel"></b></div><div class="bartrack"><div class="barfill" id="returnBar"></div></div></div></div><hr class="divider"/><p class="tiny" style="margin:15px 0 0">Rezultat je matematično pričakovanje, ne napoved posameznikovega dobitka. Kalkulator predpostavlja, da so druge kombinacije neodvisno in enakomerno naključno izbrane; pri tvojem številu kombinacij predpostavlja različne izbire. Ne modelira soodvisnosti izplačil pri sistemskih listkih, financiranja garancije iz rezervnega sklada ali združevanja kategorij.</p></div>
+<div class="panel"><h3>C. Verjetnost delitve glavnega dobitka</h3><div class="controls-frame"><div aria-label="Povezane nastavitve delitve glavnega dobitka" class="linked-controls">
+<div class="field"><div class="field-head"><label for="ticketsB">Skupno število vplačanih kombinacij</label><strong id="ticketsLabelB"></strong></div><p class="hint">Enaka nastavitev kot v A. Več vplačanih kombinacij poveča možnost, da si Šestico delijo različni listki.</p><input aria-label="Skupno število kombinacij, povezano z nastavitvijo A" id="ticketsB" max="10000000" min="100000" step="100000" type="range" value="1000000"/></div>
+<div class="field"><div class="field-head"><label for="carryB">Prenos sklada Šestice iz prejšnjega kroga</label><strong id="carryLabelB"></strong></div><p class="hint">Vneseni prenos sklada Šestice iz prejšnjega kroga (privzeta vrednost je zgolj primer, ne preverjeni podatek). Prišteje se 31 % tekočega sklada za dobitke, izračunanega iz novih vplačil. Povezane nastavitve v drugih razdelkih se posodobijo samodejno.</p><input aria-label="Preneseni sklad Šestice" id="carryB" max="10000000" min="0" step="10000" type="range" value="800000"/><p class="hint">Sklad Šestice za primer zadetka: <b id="computedJackpotB"></b></p></div>
+<div class="field"><div class="field-head"><label for="mineB">Število tvojih različnih kombinacij</label><strong id="mineLabelB"></strong></div><p class="hint">Enaka nastavitev kot v A. Tvoje različne kombinacije niso medsebojne kopije.</p><input aria-label="Tvoje kombinacije, povezano z nastavitvijo A" id="mineB" max="1000" min="1" step="1" type="range" value="1"/></div>
+</div><div class="controls-action-row"><label class="toggle tax-mirror"><input checked="" id="taxB" type="checkbox"/> Upoštevaj 15 % davka na posamezne dobitke od 300 € naprej</label><button class="btn reset-control" type="button">↺ Ponastavi predpostavke</button></div></div><div class="grid2"><div class="card"><span class="label">Verjetnost, da si Šestico deliš z vsaj eno drugo kombinacijo<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Verjetnost, da si Šestico deliš z vsaj eno drugo kombinacijo" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Če tvoja kombinacija zadene Šestico, ta odstotek pove, kako verjetno je, da je enake številke vplačal še vsaj en drug listek. Ne pomeni verjetnosti tvojega zadetka.</span></span></span><strong class="big" id="sharePct"></strong></div><div class="card"><span class="label">Kolikšen delež sklada v povprečju prejmeš, če zadeneš Šestico<span class="info-wrap"><button aria-expanded="false" aria-label="Pojasnilo: Kolikšen delež sklada v povprečju prejmeš, če zadeneš Šestico" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Če zadeneš Šestico, ta odstotek pove, kolikšen delež celotnega sklada bi v povprečju pripadel tvoji dobitni kombinaciji. Upošteva tako primere, ko zadeneš sam, kot primere delitve. Delež je pred davkom.</span></span></span><strong class="big" id="sharePart"></strong></div></div><p class="tiny">Naslednje verjetnosti so <b>pogojne na to, da ena od tvojih različnih kombinacij zadene</b>. Pri Šestici druge tvoje različne kombinacije istega dobitka ne morejo zadeti; pri nižjih kategorijah pa lahko zadenejo isto kategorijo. Njihov vpliv ocenjujemo statistično, saj izbranih številk ne poznamo. Gre za dobitne kombinacije, ne za število posameznih oseb.</p><div aria-live="polite" id="sharingBars"></div><p class="note" id="sharingText"></p>
+<div class="other-sharing"><h4>Delitev drugih dobitkov</h4><p class="hint">Razširi posamezno kategorijo za statistično oceno delitve sklada. Prikaz je pogojen s tem, da <b>ena tvoja kombinacija</b> zadene to kategorijo, in predpostavlja neodvisno naključno izbiro drugih listkov. Število dobitnih kombinacij ni isto kot število ljudi.</p>
+<div id="otherSharingPanels"></div><p class="tiny">Kategorija 0 + 1 ni vključena: zanjo je praviloma določen fiksen dobitek 1,20 € in se ne deli na enak način. Uradna posebna pravila združevanja kategorij niso simulirana.</p></div></div>
+<div class="panel"><h3>D. Ocenjena izplačila</h3><div class="note"><b>Uradna metodologija:</b> od 0,60 € plačane cene kombinacije se najprej izloči davek od srečk, nato je 57 % vplačila namenjenih skladu za dobitke. Deleži sklada so določeni v 15. členu pravil. Prenos Šestice nastaviš med glavnimi drsniki; prenose drugih kategorij lahko vneseš spodaj. Če dejanskih prenosov ne poznaš, ostanejo prikazani kot neznani z modelno predpostavko 0 €. <a href="https://www.loterija.si/files/za-igralce/pravila-iger/precisceno-besedilo-pravil-igre-na-sreco-loto-010725.pdf" rel="noopener" target="_blank">Preberi pravila</a>.</div>
+<div class="controls-frame"><div aria-label="Povezane nastavitve izplačil" class="linked-controls">
+<div class="field"><div class="field-head"><label for="ticketsC">Skupno število vplačanih kombinacij</label><strong id="ticketsLabelC"></strong></div><p class="hint">Določa ocenjeno število drugih dobitnikov in velikost modeliranih skladov nižjih kategorij. Povezano z A in B.</p><input id="ticketsC" max="10000000" min="100000" step="100000" type="range" value="1000000"/></div>
+<div class="field"><div class="field-head"><label for="carryC">Prenos sklada Šestice iz prejšnjega kroga</label><strong id="carryLabelC"></strong></div><p class="hint">Vneseni prenos sklada Šestice iz prejšnjega kroga (privzeta vrednost je zgolj primer, ne preverjeni podatek). Prišteje se 31 % tekočega sklada za dobitke, izračunanega iz novih vplačil. Povezane nastavitve v drugih razdelkih se posodobijo samodejno.</p><input aria-label="Preneseni sklad Šestice" id="carryC" max="10000000" min="0" step="10000" type="range" value="800000"/><p class="hint">Sklad Šestice za primer zadetka: <b id="computedJackpotC"></b></p></div>
+<div class="field"><div class="field-head"><label for="mineC">Število tvojih različnih kombinacij</label><strong id="mineLabelC"></strong></div><p class="hint">Vpliva na skupna pričakovana izplačila za vse tvoje kombinacije. Povezano z A in B.</p><input id="mineC" max="1000" min="1" step="1" type="range" value="1"/></div>
+</div><div class="controls-action-row"><label class="toggle tax-mirror"><input checked="" id="taxC" type="checkbox"/> Upoštevaj 15 % davka na posamezne dobitke od 300 € naprej</label><button class="btn reset-control" type="button">↺ Ponastavi predpostavke</button></div></div><p class="hint">Šestica ima ob zadetku garantiran sklad najmanj <b>400.000 €</b>. Tabela temelji na <b>uradnih odstotkih razdelitve sklada</b> (15. člen pravil), ne na zgodovinskih ocenah izplačil. Prikazuje trenutni ocenjeni sklad, pričakovani dobitek ob zadetku in prispevek k izplačilu ene vplačane kombinacije.</p>
+<details class="carry-details"><summary>Napredne nastavitve: preneseni skladi drugih kategorij</summary><p class="hint">Z drsniki nastavi predpostavljeni prenos za vsako kategorijo (0–500.000 €); za večje ali natančnejše zneske uporabi ročni vnos. Privzeta vrednost 0 € pomeni, da prenosa ne poznamo oziroma ga v scenariju ne predpostavljamo; ne pomeni, da prenosa v resnici ni. Vnosi veljajo za celoten sklad kategorije pred delitvijo, ne za posameznega dobitnika.</p><div class="carry-grid" id="otherCarryInputs"></div></details><p class="hint table-scroll-hint">Na ožjih zaslonih povleci tabelo levo ali desno, da vidiš vse stolpce in skupne zneske.</p><div class="tablewrap detailed-tablewrap" tabindex="0" role="region" aria-label="Tabela ocenjenih izplačil; na ožjih zaslonih vodoravno pomična"><table class="detailed-table"><thead><tr>
+<th>Kategorija</th><th class="num">Verjetnost (približno)</th>
+<th class="num">Sklad kategorije pred delitvijo <span class="info-wrap"><button aria-expanded="false" aria-label="Razlaga predvidenega dobitka" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Skupni modelirani sklad posamezne kategorije, pred davkom in delitvijo. Pri Šestici se upošteva izračunani sklad oziroma garancija ob zadetku; pri drugih kategorijah se sklad izračuna iz uradnih deležev tekočih vplačil in morebitnih ročno vnesenih prenosov.</span></span></th>
+<th class="num"><span id="taxColumnHeading">Povprečen dobitek po davku</span> <span class="info-wrap"><button aria-expanded="false" aria-label="Razlaga povprečnega dobitka po davku" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Pričakovano izplačilo ob zadetku posamezne kategorije, z upoštevano statistično delitvijo sklada. Če je davek vključen, model upošteva še 15 % davka pri posameznem dobitku od 300 € naprej. Gre za modelno oceno, ne za zagotovljeno izplačilo.</span></span></th>
+<th class="num">Povprečno izplačilo na eno vplačano kombinacijo <span class="info-wrap"><button aria-expanded="false" aria-label="Razlaga pričakovanega izplačila na kombinacijo" class="info-trigger" type="button">?</button><span class="info-bubble" role="tooltip">Verjetnost zadetka te kategorije krat pričakovano izplačilo ob zadetku. Seštevek vseh kategorij je matematično pričakovano izplačilo na ENO kombinacijo, enako kot kazalnik »Pričakovano izplačilo / kombinacijo« v B. Tvoj rezultat; za vse tvoje kombinacije se pomnoži z njihovim številom.</span></span></th>
+</tr></thead><tbody id="prizeRows"></tbody><tfoot><tr><th colspan="4">Skupno pričakovano izplačilo na eno kombinacijo</th><th aria-live="polite" class="num" id="prizeTotalEV"></th></tr><tr><th colspan="4">Pričakovana izplačila za <span id="prizeMineCount">1</span> tvojih vplačanih kombinacij</th><th aria-live="polite" class="num" id="prizeAllEV"></th></tr></tfoot></table></div>
+<p class="tiny">Skladi kategorij 5 + 1, 5, 4 + 1, 4, 3 + 1 in 3 se izračunajo iz 57 % vplačil brez davka od srečk in uradnih deležev 2 %, 8 %, 3 %, 5,5 %, 4,5 % in 17 %. Pri delitvi se upoštevajo tudi druge tvoje različne kombinacije, če lahko zadenejo isto kategorijo. Gre za statistični približek, ker dejanskih izbranih številk ne poznamo. Prenosi iz prejšnjih krogov so vključeni le, če jih ročno vneseš; izjema je nastavljeni prenos Šestice. Rezervni sklad in združevanje kategorij ob preseganju dobitka višje kategorije niso avtomatsko vključeni. Pri 0 + 1 ostane dobitek fiksen. Izklopljen davek pomeni, da stolpec prikazuje zneske <b>pred davkom</b>. Seštevek zadnjega stolpca velja za eno kombinacijo; v razdelku B »Pričakovana izplačila« prikazuje modelno vsoto za <b>vse tvoje kombinacije</b>.</p></div>
+
+<div class="panel" id="razdelitev-vplacil"><h3>E. Kam gre denar od vplačil?</h3><div class="controls-frame"><div aria-label="Povezane nastavitve razdelitve vplačil" class="linked-controls">
+<div class="field"><div class="field-head"><label for="ticketsDFund">Skupno število vplačanih kombinacij</label><strong id="ticketsLabelDFund"></strong></div><p class="hint">Enaka skupna nastavitev v vseh razdelkih; vpliva na velikost skladov in možnost delitve dobitkov.</p><input id="ticketsDFund" max="10000000" min="100000" step="100000" type="range" value="1000000"/></div>
+<div class="field"><div class="field-head"><label for="carryDFund">Prenos sklada Šestice iz prejšnjega kroga</label><strong id="carryLabelDFund"></strong></div><p class="hint">Preneseni znesek prištejemo deležu Šestice iz tekočih vplačil; ob zadetku velja najmanj 400.000 € garantiranega sklada.</p><input id="carryDFund" max="10000000" min="0" step="10000" type="range" value="800000"/><p class="hint">Sklad Šestice za primer zadetka: <b id="computedJackpotDFund"></b></p></div>
+<div class="field"><div class="field-head"><label for="mineDFund">Število tvojih različnih kombinacij</label><strong id="mineLabelDFund"></strong></div><p class="hint">Spreminja tvoj skupni vložek, skupna pričakovana izplačila in možnost zadetka.</p><input id="mineDFund" max="1000" min="1" step="1" type="range" value="1"/></div>
+</div><div class="controls-action-row"><label class="toggle tax-mirror"><input checked="" id="taxFund" type="checkbox"/> Upoštevaj 15 % davka na posamezne dobitke od 300 € naprej</label><button class="btn reset-control" type="button">↺ Ponastavi predpostavke</button></div></div>
+<p>Pravila določajo, da se za sklade dobitkov nameni <strong>57 % vplačil brez 10-odstotnega davka od srečk</strong>. Odstotek zato ni 57 % celotne cene, ki jo plačaš. Primerjaj uradno razdelitev vplačil s pričakovanim izplačilom in ROI, ki ju izračuna ta model.</p>
+<p class="fund-story-intro">Poglejmo razdelitev cene ene kombinacije ter modelni pričakovani donos v izbranem žrebanju. <strong>Delež za nagrade</strong> določa, koliko se nameni nagradnim skladom, <strong>pričakovano vračilo</strong> pa pove, koliko bi statistično prejel igralec glede na izbrani scenarij.</p>
+<div class="fund-stats">
+<div class="card fund-story-card"><span class="fund-step">1 · Pravila igre</span><span class="label">Od vplačila gre v sklade za dobitke</span><strong class="big" id="fundShare">51,82 %</strong><p class="fund-example">Približno <strong id="fundCents">31,09 centa</strong> od 0,60 €.</p><p class="hint">57 % cene brez davka od srečk pomeni 51,82 % celotne plačane cene. Denar je namenjen vsem dobitnim kategorijam, ne posameznemu igralcu.</p></div>
+<div class="card fund-story-card"><span class="fund-step">2 · Matematično pričakovanje</span><span class="label">Igralec v povprečju prejme nazaj</span><strong class="big" id="modelReturnShare">—</strong><p class="fund-example">Približno <strong id="returnCents">—</strong> pri ceni kombinacije <strong id="returnPriceLabel">0,60 €</strong>.</p><p class="hint">Ocena za izbrani krog temelji na verjetnostih, delitvah, ročno nastavljenih prenosih in izbrani obdavčitvi; prenosi so denar iz prejšnjih krogov, ne del novih vplačil. Ne gre za zagotovljeno izplačilo.</p></div>
+<div class="card fund-story-card"><span class="fund-step">3 · Rezultat za igralca</span><span class="label" id="returnResultLabel">Pričakovana izguba glede na vplačilo</span><strong class="big" id="compareRoi">—</strong><p class="fund-example" id="roiCents">—</p><p class="hint">ROI primerja pričakovano izplačilo s celotnim stroškom kombinacije. Negativna vrednost pomeni pričakovano izgubo.</p></div>
+</div>
+<div aria-label="Razdelitev vplačil" class="fund-breakdown">
+<div class="fund-row"><div class="fund-row-head"><span>Davek od srečk</span><strong id="ticketTaxPct"></strong></div><div class="bartrack"><div class="barfill" id="ticketTaxBar" style="background:#a1b3cb"></div></div></div>
+<div class="fund-row"><div class="fund-row-head"><span>Za sklade dobitkov</span><strong id="fundPct"></strong></div><div class="bartrack"><div class="barfill" id="fundBar" style="background:#f2c66d"></div></div></div>
+<div class="fund-row"><div class="fund-row-head"><span>Preostali del cene</span><strong id="remainingPct"></strong></div><div class="bartrack"><div class="barfill" id="remainingBar" style="background:#63748d"></div></div></div>
+</div>
+<div class="fund-amounts"><p><b>Za eno kombinacijo:</b> od <span id="costOne"></span> gre približno <b id="fundOne"></b> v sklade.</p><p><b>Za vse vplačane kombinacije:</b> skupna vplačila <b id="allPaid"></b>, od tega za sklade <b id="allFund"></b>.</p><p><b>Primerjava z ROI:</b> če se v modelu igralcu v povprečju vrne <b id="returnOne"></b> na kombinacijo, je njegov pričakovani ROI <b id="roiText"></b>. <span id="comparisonNote"></span></p></div>
+<div class="note"><b>Zakaj je pričakovani donos navadno negativen?</b> Nagradni skladi so financirani le iz vnaprej določenega dela vplačil, ne iz celotne cene listkov. Verjetnosti zadetkov določajo, kako se ta sredstva porazdelijo med redke večje in številne manjše dobitke; večina kombinacij zato ne povrne stroška vplačila. <b>57 % ni enako pričakovanemu ROI</b>: računamo ga od osnove brez davka, ROI pa od cele plačane cene. Poleg tega so lahko prisotni prenosi iz prejšnjih krogov, neizplačani skladi, posebna pravila in davek na dobitke. Zato se lahko pričakovano izplačilo v posameznem scenariju razlikuje od deleža tekočih vplačil za sklade.</div>
+</div>
+</section>
+<section><div class="eyebrow">06 / Kaj pomeni v praksi?</div><h2>Zakaj Loto dolgoročno praviloma ni donosna naložba?</h2><p>Z vsakim dodatnim listkom plačaš novo priložnost. Čeprav več listkov poveča možnost zadetka, se hkrati povečajo tudi skupni stroški. Visok jackpot lahko izboljša pričakovano vrednost, vendar je treba upoštevati tudi njegovo možno delitev in obdavčitev.</p><p>Pričakovani donos osnovne igre je v običajnih okoliščinah negativen. Posameznik lahko vseeno zadene izjemno visoko nagrado — to je ravno razlog za privlačnost igre — toda redki veliki dobitki ne pomenijo, da je igranje zanesljiv način povečevanja premoženja.</p><div class="note"><b>Loto je lahko plačana zabava. A s srečkami se ljudem prodaja tudi upanje:</b> za majhen znesek dobijo občutek možnosti, da bi se jim življenje korenito spremenilo. To upanje je resnično kot občutek, ni pa enako ugodni matematični možnosti ali smiselni finančni naložbi. Če igraš, določi omejen znesek, ki ga lahko brez težav izgubiš.</div></section>
+</main><footer><div class="wrap"><b>Viri in metodologija</b><p class="tiny">Uradna <a href="https://www.loterija.si/loto/vse-o-igri" rel="noopener noreferrer" target="_blank">pravila in osnovne informacije</a>, <a href="https://www.loterija.si/pravila-iger-na-sreco" rel="noopener noreferrer" target="_blank">prečiščena pravila igre</a>, <a href="https://www.loterija.si/loto/rezultati" rel="noopener noreferrer" target="_blank">rezultati žrebanj</a>, <a href="https://www.loterija.si/vplacila-izplacila-zrebanja" rel="noopener noreferrer" target="_blank">podatki o obdavčitvi dobitkov</a>. Razdelitev skladov temelji na deležih iz pravil igre. Prenos Šestice je nastavljiv, prenose drugih kategorij pa je mogoče po želji vnesti v naprednih nastavitvah (privzeto 0 €). Število dobitnih kombinacij je statistično modelirano; pri nižjih dobitkih upoštevamo tudi druge igralčeve različne kombinacije s približkom pogojne porazdelitve, ne z njihovimi dejanskimi številkami; združevanje oziroma poravnava kategorij, uporaba rezervnega sklada in druge posebne prilagoditve niso v celoti vključeni. Zato ne gre za uradno napoved izplačil. Spletna stran deluje lokalno, brez zunanjih knjižnic ali pošiljanja podatkov. Matematični zapis formul uporablja MathJax (za prvi prikaz je potrebna internetna povezava); vsi izračuni kalkulatorja delujejo tudi brez nje.</p></div></footer>
+<script>
+const M=7059052, fmt=(x,d=2)=>Number(x).toLocaleString('sl-SI',{minimumFractionDigits:d,maximumFractionDigits:d}),$=id=>document.getElementById(id);
+const C=(n,k)=>{if(k>n||k<0)return 0;let x=1;for(let j=1;j<=k;j++)x*= (n-j+1)/j;return x};
+const counts=[1,6,6*37,15*37,15*C(37,2),20*C(37,2),20*C(37,3),C(37,5)];
+const probs=counts.map(x=>x/M);
+const names=['5 + 1','5','4 + 1','4','3 + 1','3','0 + 1'];
+// Official allocation of the total 57%-of-net-wagers prize fund.
+const allocations=[0.02,0.08,0.03,0.055,0.045,0.17];
+// 0.60 EUR ticket price includes 10% ticket tax (9.09% of gross amount).
+const TICKET_TAX_RATE=0.10, PRIZE_FUND_RATE=0.57;
+const prizeRows=$('prizeRows');
+const carryNames=['5 + 1','5','4 + 1','4','3 + 1','3'];
+// Details remain collapsed by default, and calculations use the same probabilities as section D.
+$('otherSharingPanels').innerHTML=carryNames.map((name,i)=>`<details class="share-detail"><summary>Dobitek ${name} — verjetnost delitve in delež sklada</summary><div class="share-content"><div class="share-stats"><div class="share-stat"><span>Verjetnost, da poleg tvoje zadene še vsaj ena druga kombinacija</span><strong id="otherShareChance${i}">—</strong></div><div class="share-stat"><span>Ocenjeno število drugih dobitnih kombinacij</span><strong id="otherShareCount${i}">—</strong></div><div class="share-stat"><span>Ocenjeni povprečni delež sklada za tvojo kombinacijo</span><strong id="otherShareFraction${i}">—</strong></div></div><p class="hint" id="otherShareNote${i}" style="margin-top:13px"></p></div></details>`).join('');
+
+$('otherCarryInputs').innerHTML=carryNames.map((name,i)=>`<div class="carry-item"><label for="lowerCarrySlider${i}">Prenos ${name}</label><strong id="lowerCarryLabel${i}" class="carry-amount">0 €</strong><input class="carry-mini-slider" id="lowerCarrySlider${i}" type="range" min="0" max="500000" step="1000" value="0" aria-label="Preneseni sklad ${name}, drsnik v evrih"><label class="carry-exact-label" for="lowerCarry${i}">Natančen znesek (€)</label><input class="carry-manual" id="lowerCarry${i}" type="text" inputmode="decimal" value="0" aria-label="Preneseni sklad ${name}, ročni vnos v evrih"></div>`).join('');
+const lastValidCarry=carryNames.map(()=>0);
+function readCarry(i){
+ const raw=$('lowerCarry'+i).value.trim().replace(/\s/g,'').replace(',','.');
+ if(raw==='' || !/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(raw))return lastValidCarry[i];
+ const value=Number(raw);
+ if(!Number.isFinite(value)||value<0||value>1e9)return lastValidCarry[i];
+ lastValidCarry[i]=value;
+ return value;
+}
+// The player's other selections are distinct from their winning combination.
+// For every category their conditional probability differs slightly from an
+// independent outsider's entry; keep these two groups separate.
+function conditionalCompetition(categoryIndex,tickets,mine){
+ const outsiders=Math.max(0,tickets-mine), ownOthers=Math.max(0,mine-1);
+ const qOutside=counts[categoryIndex]/M;
+ const qOwn=(counts[categoryIndex]-1)/(M-1);
+ const mean=outsiders*qOutside+ownOthers*qOwn;
+ const variance=outsiders*qOutside*(1-qOutside)+ownOthers*qOwn*(1-qOwn);
+ return {outsiders,ownOthers,qOutside,qOwn,mean,variance,
+   pNone:Math.exp(outsiders*Math.log1p(-qOutside)+ownOthers*Math.log1p(-qOwn))};
+}
+function groupMass(n,p,limit){
+ const arr=new Array(limit+1).fill(0);
+ arr[0]=Math.exp(n*Math.log1p(-p));
+ for(let k=1;k<=limit;k++)arr[k]=arr[k-1]*(n-k+1)/k*p/(1-p);
+ return arr;
+}
+// Distribution of X = X_outsiders + X_own, each a separate binomial.
+// Use exact convolution for sparse winners; a normal approximation is needed
+// only when the expected winner count is very large.
+function categoryEstimate(pool,comp,tax){
+ const {outsiders,ownOthers,qOutside,qOwn,mean,variance}=comp;
+ let gross=0,after=0;
+ const awardFor=k=>Math.floor((pool/(k+1))*10+1e-8)/10;
+ const netFor=k=>{const a=awardFor(k);return tax&&a>=300?a*.85:a};
+ if(mean<120){
+   const limit=Math.min(1100,Math.ceil(mean+14*Math.sqrt(variance+1)+30));
+   const outsider=groupMass(outsiders,qOutside,Math.min(outsiders,limit));
+   const own=groupMass(ownOthers,qOwn,Math.min(ownOthers,limit));
+   const dist=new Float64Array(limit+1);
+   for(let j=0;j<own.length;j++)for(let k=0;k<outsider.length&&j+k<=limit;k++)dist[j+k]+=own[j]*outsider[k];
+   let massTotal=0;
+   for(let k=0;k<=limit;k++){
+     const mass=dist[k];massTotal+=mass;
+     gross+=mass*pool/(k+1);
+     after+=mass*netFor(k);
+   }
+   // The omitted binomial tail is negligible by construction.
+   if(massTotal<0.999999)return {gross:NaN,after:NaN};
+ }else{
+   // Numerically integrate a normal approximation to the same two-group
+   // sum; unlike taxing the mean award, this applies the threshold per case.
+   const std=Math.sqrt(variance),step=0.05;
+   let weight=0;
+   for(let i=-140;i<=140;i++){
+     const z=i*step,k=Math.max(0,Math.round(mean+std*z));
+     const w=Math.exp(-0.5*z*z);
+     weight+=w;gross+=w*pool/(k+1);after+=w*netFor(k);
+   }
+   gross/=weight;after/=weight;
+ }
+ return {gross,after,pool};
+}
+const helpEV='Vsota verjetnosti × povprečni dobitek v vsaki kategoriji';
+function moneyCell(id){return `<td class="num computed-value" id="${id}">—</td>`}
+prizeRows.insertAdjacentHTML('beforeend',`<tr><td><strong>Šestica (6)</strong></td><td class="num">1 : ${fmt(M,0)}</td>${moneyCell('grandBefore')}${moneyCell('grandAfter')}${moneyCell('grandEV')}</tr>`);
+names.forEach((name,i)=>{let tr=document.createElement('tr');tr.innerHTML=`<td>${name}</td><td class="num">1 : ${fmt(1/probs[i+1],0)}</td>${moneyCell('prizePool'+i)}${moneyCell('prizeAfter'+i)}${moneyCell('prizeEV'+i)}`;prizeRows.append(tr)});
+// Distribution of other winning combinations conditional on this ticket being a winner.
+// Binomial PMF recursively, with a stopping point far beyond the expected count.
+function distribution(n){const p=1/M;let mass=Math.pow(1-p,n),out=[];for(let k=0;k<=Math.min(n,100);k++){out.push(mass);if(k===n)break;mass*=((n-k)/(k+1))*p/(1-p)}return out}
+function update(){let tickets=+$('tickets').value, mine=+$('mine').value, carry=+$('carry').value, price=0.60,tax=$('tax').checked;
+const collectedJackpot=carry+(tickets*0.60/(1+TICKET_TAX_RATE))*PRIZE_FUND_RATE*0.31;
+// The guaranteed amount applies if Six is won; it is not part of the actual carryover.
+const jackpot=Math.max(400000,collectedJackpot);
+$('ticketsLabel').textContent=fmt(tickets,0);$('mineLabel').textContent=fmt(mine,0);$('carryLabel').textContent=fmt(carry,0)+' €';$('computedJackpotA').textContent=fmt(jackpot,2)+' €'+(collectedJackpot<400000?' (garantirano ob zadetku)':'');
+[['ticketsB','tickets',tickets],['carryB','carry',carry],['mineB','mine',mine]].forEach(([mirror,primary,value])=>{if($(mirror).value!==String(value))$(mirror).value=value});
+$('ticketsLabelB').textContent=fmt(tickets,0);$('mineLabelB').textContent=fmt(mine,0);$('carryLabelB').textContent=fmt(carry,0)+' €';$('computedJackpotB').textContent=fmt(jackpot,2)+' €'+(collectedJackpot<400000?' (garantirano ob zadetku)':'');
+[['ticketsC',tickets],['carryC',carry],['mineC',mine]].forEach(([id,value])=>{if($(id).value!==String(value))$(id).value=value});
+$('ticketsLabelC').textContent=fmt(tickets,0);$('mineLabelC').textContent=fmt(mine,0);$('carryLabelC').textContent=fmt(carry,0)+' €';$('computedJackpotC').textContent=fmt(jackpot,2)+' €'+(collectedJackpot<400000?' (garantirano ob zadetku)':'');
+[['ticketsD',tickets],['carryD',carry],['mineD',mine],['ticketsDFund',tickets],['carryDFund',carry],['mineDFund',mine]].forEach(([id,value])=>{if($(id).value!==String(value))$(id).value=value});
+$('ticketsLabelDFund').textContent=fmt(tickets,0);$('mineLabelDFund').textContent=fmt(mine,0);$('carryLabelDFund').textContent=fmt(carry,0)+' €';$('computedJackpotDFund').textContent=fmt(jackpot,2)+' €'+(collectedJackpot<400000?' (garantirano ob zadetku)':'');$('ticketsLabelD').textContent=fmt(tickets,0);$('mineLabelD').textContent=fmt(mine,0);$('carryLabelD').textContent=fmt(carry,0)+' €';$('computedJackpotD').textContent=fmt(jackpot,2)+' €'+(collectedJackpot<400000?' (garantirano ob zadetku)':'');
+['taxB','taxC','taxD','taxFund'].forEach(id=>$(id).checked=tax);
+let dist=distribution(Math.max(0,tickets-mine));const d0=dist[0]||0,d1=dist[1]||0,d2=dist[2]||0;const share=1-d0;
+$('sharePct').textContent=fmt(100*share)+' %';
+let shareFactor=0, sixGross=0,sixNet=0;
+for(let k=0;k<dist.length;k++){const portion=jackpot/(k+1),mass=dist[k];shareFactor+=mass/(k+1);sixGross+=mass*portion;sixNet+=mass*(tax&&portion>=300?portion*.85:portion)}
+$('sharePart').textContent=fmt(shareFactor*100)+' %';
+let data=[['Samo tvoja dobitna kombinacija',d0],['Skupaj 2 dobitni kombinaciji',d1],['Skupaj 3 dobitne kombinacije',d2],['4 ali več dobitnih kombinacij',Math.max(0,1-d0-d1-d2)]];
+$('sharingBars').innerHTML=data.map(([label,v])=>`<div class="barrow"><div class="barlabel"><span>${label}</span><b>${fmt(v*100)} %</b></div><div class="bartrack"><div class="barfill" style="width:${Math.min(100,Math.max(0,v*100))}%"></div></div></div>`).join('');
+$('sharingText').textContent='Če tvoja kombinacija zadene Šestico, je ob navedenem številu vplačanih kombinacij pričakovani delež nagradnega sklada '+fmt(shareFactor*100)+' % oziroma '+fmt(sixGross)+' € pred davkom. To je povprečje čez možne delitve, ne zagotovljen znesek.';
+$('grandBefore').textContent=fmt(jackpot)+' €';
+$('grandAfter').textContent=fmt(tax?sixNet:sixGross)+' €';$('taxColumnHeading').textContent='Povprečen dobitek '+(tax?'po davku':'pred davkom');
+$('grandEV').textContent=fmt((tax?sixNet:sixGross)/M,9)+' €';
+// Official rules art. 6 and 15: net wagers and category shares.
+// Conditional sharing estimates for each non-fixed category; independent of taxes and carried amounts.
+for(let i=0;i<6;i++){
+  const comp=conditionalCompetition(i+1,tickets,mine);
+  const avgOthers=comp.mean;
+  const divided=1-comp.pNone;
+  const avgFraction=categoryEstimate(1,comp,false).gross;
+  $('otherShareChance'+i).textContent=fmt(divided*100,4)+' %';
+  $('otherShareCount'+i).textContent=fmt(avgOthers,2);
+  $('otherShareFraction'+i).textContent=fmt(avgFraction*100,4)+' %';
+  $('otherShareNote'+i).textContent='Če tvoja kombinacija zadene '+carryNames[i]+', je ocenjena verjetnost delitve '+fmt(divided*100,2)+' %. Upoštevamo '+fmt(comp.ownOthers,0)+' tvojih drugih različnih kombinacij in '+fmt(comp.outsiders,0)+' tujih kombinacij. Povprečni delež sklada pred davkom znaša približno '+fmt(avgFraction*100,4)+' %. Dejanske številke tvojih kombinacij niso znane, zato gre za statistično oceno.';
+}
+const netWagers=tickets*0.60/(1+TICKET_TAX_RATE);
+const baseFund=netWagers*PRIZE_FUND_RATE;
+let other=0;
+for(let i=0;i<7;i++){
+  if(i<6){$('lowerCarryLabel'+i).textContent=fmt(readCarry(i),0)+' €';}
+  const pool=i===6?1.2:baseFund*allocations[i]+readCarry(i);
+  const comp=i===6?null:conditionalCompetition(i+1,tickets,mine);
+  const category=i===6?{gross:1.2,after:1.2}:categoryEstimate(pool,comp,tax);
+  const contrib=probs[i+1]*category.after;
+  other+=contrib;
+  $('prizePool'+i).textContent=i===6?'1,20 € (fiksno)':fmt(pool)+' € (sklad)';
+  $('prizeAfter'+i).textContent=fmt(category.after)+' €';
+  $('prizeEV'+i).textContent=fmt(contrib,9)+' €';
+}
+let ev=(tax?sixNet:sixGross)/M+other,roi=(ev/price-1)*100,investment=mine*price,returns=mine*ev,profit=returns-investment;
+
+// Decomposition of the paid ticket price: VAT-like ticket tax, prize funds and remainder.
+const ticketTaxShare=TICKET_TAX_RATE/(1+TICKET_TAX_RATE);
+const fundShare=PRIZE_FUND_RATE/(1+TICKET_TAX_RATE);
+const remainder=1-ticketTaxShare-fundShare;
+const paidPrice=0.60; // Fiksna cena ene kombinacije osnovnega Lota
+const returnRatio=ev/price;
+$('fundShare').textContent=fmt(fundShare*100)+' %';
+$('fundCents').textContent=fmt(paidPrice*fundShare*100,2)+' centa';
+$('returnCents').textContent=fmt(ev*100,2)+' centa';
+$('returnPriceLabel').textContent=fmt(price,2)+' €';
+$('returnResultLabel').textContent=roi<0?'Pričakovana izguba glede na vplačilo':'Pričakovani donos glede na vplačilo';
+$('roiCents').textContent=(ev-price<0?'V povprečju izgubiš ':'V povprečju pridobiš ')+fmt(Math.abs(ev-price)*100,2)+' centa na kombinacijo.';
+$('modelReturnShare').textContent=fmt(returnRatio*100)+' %';
+$('compareRoi').textContent=(roi>=0?'+':'')+fmt(roi)+' %';
+$('compareRoi').className='big '+(roi<0?'negative':'positive');
+[['ticketTaxPct','ticketTaxBar',ticketTaxShare],['fundPct','fundBar',fundShare],['remainingPct','remainingBar',remainder]].forEach(([label,bar,v])=>{$(label).textContent=fmt(v*100)+' %';$(bar).style.width=(v*100)+'%'});
+$('costOne').textContent=fmt(paidPrice)+' €';
+$('fundOne').textContent=fmt(paidPrice*fundShare,4)+' €';
+$('allPaid').textContent=fmt(tickets*paidPrice)+' €';
+$('allFund').textContent=fmt(tickets*paidPrice*fundShare)+' €';
+$('returnOne').textContent=fmt(ev,9)+' €';
+$('roiText').textContent=(roi>=0?'+':'')+fmt(roi)+' %';
+$('comparisonNote').textContent='Izplačila vključujejo tudi morebitne prenose in garantirano Šestico ob zadetku; zato niso enaka samo skladom iz novih vplačil.';
+$('prizeTotalEV').textContent=fmt(ev,9)+' €';$('prizeMineCount').textContent=fmt(mine,0);$('prizeAllEV').textContent=fmt(returns,2)+' €';$('roi').textContent=(roi>0?'+':'')+fmt(roi)+' %';$('roi').className='big '+(roi<0?'negative':'positive');
+$('ev').textContent=fmt(ev,9)+' €';$('mineChance').textContent=fmt(mine/M*100,9)+' %';$('investment').textContent=fmt(investment)+' €';$('returns').textContent=fmt(returns)+' €';$('netResult').textContent=(profit>0?'+':'')+fmt(profit)+' €';$('netResult').className='big '+(profit<0?'negative':'positive');$('winShare').textContent=fmt(tax?sixNet:sixGross)+' €';$('winShareLabel').textContent='Pričakovana Šestica ob zadetku ('+(tax?'po davku':'pred davkom')+')';$('investBarLabel').textContent=fmt(investment)+' €';$('returnBarLabel').textContent=fmt(returns)+' €';$('returnBar').style.width=Math.min(100,Math.max(0,100*returns/investment))+'%';
+}
+['tickets','carry','mine','tax'].forEach(id=>$(id).addEventListener('input',update));
+carryNames.forEach((_,i)=>{
+  $('lowerCarrySlider'+i).addEventListener('input',()=>{
+    $('lowerCarry'+i).value=$('lowerCarrySlider'+i).value;
+    update();
+  });
+  $('lowerCarry'+i).addEventListener('input',()=>{
+    const value=readCarry(i);
+    $('lowerCarrySlider'+i).value=Math.min(500000,value);
+    update();
+  });
+  $('lowerCarry'+i).addEventListener('blur',()=>{
+    const valid=readCarry(i);
+    $('lowerCarry'+i).value=String(valid).replace('.',',');
+    update();
+  });
+});
+[['ticketsC','tickets'],['carryC','carry'],['mineC','mine']].forEach(([mirror,primary])=>$(mirror).addEventListener('input',()=>{$(primary).value=$(mirror).value;update()}));
+[['ticketsB','tickets'],['carryB','carry'],['mineB','mine']].forEach(([mirror,primary])=>$(mirror).addEventListener('input',()=>{$(primary).value=$(mirror).value;update()}));
+[['ticketsD','tickets'],['carryD','carry'],['mineD','mine'],['ticketsDFund','tickets'],['carryDFund','carry'],['mineDFund','mine']].forEach(([mirror,primary])=>$(mirror).addEventListener('input',()=>{$(primary).value=$(mirror).value;update()}));
+['taxB','taxC','taxD','taxFund'].forEach(id=>$(id).addEventListener('change',()=>{$('tax').checked=$(id).checked;update()}));
+document.querySelectorAll('.reset-control').forEach(btn=>btn.addEventListener('click',()=>{$('tickets').value=1000000;$('carry').value=800000;$('mine').value=1;$('tax').checked=true;carryNames.forEach((_,i)=>{lastValidCarry[i]=0;$('lowerCarry'+i).value='0';$('lowerCarrySlider'+i).value='0'});document.querySelectorAll('details').forEach(panel=>{panel.open=false});document.querySelectorAll('.info-wrap.is-open').forEach(w=>{w.classList.remove('is-open');const b=w.querySelector('.info-trigger');if(b)b.setAttribute('aria-expanded','false')});const popup=document.getElementById('floatingTableHelp');if(popup){popup.classList.remove('is-visible');popup.style.display='none'}update()}));update();
+</script><script>
+// Tooltip buttons work with mouse, keyboard and touch, and close on outside tap / Escape.
+document.querySelectorAll('.info-trigger').forEach(btn=>{
+ btn.addEventListener('click',event=>{
+  event.preventDefault();event.stopPropagation();const wrap=btn.closest('.info-wrap');const open=!wrap.classList.contains('is-open');
+  document.querySelectorAll('.info-wrap.is-open').forEach(w=>{w.classList.remove('is-open');w.querySelector('button').setAttribute('aria-expanded','false')});
+  wrap.classList.toggle('is-open',open);btn.setAttribute('aria-expanded',String(open));
+ });
+});
+function closeInfo(){document.querySelectorAll('.info-wrap.is-open').forEach(w=>{w.classList.remove('is-open');w.querySelector('button').setAttribute('aria-expanded','false')})}
+document.addEventListener('click',e=>{if(!e.target.closest('.info-wrap'))closeInfo()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInfo()});
+</script><script>
+// Portal tooltip: position independently of the horizontally scrolling table.
+(()=>{
+ const tips=document.querySelectorAll('.detailed-table .info-trigger');
+ const overlay=document.createElement('div');overlay.id='floatingTableHelp';overlay.setAttribute('role','tooltip');document.body.appendChild(overlay);
+ let active=null;
+ function place(btn){const r=btn.getBoundingClientRect();const wide=Math.min(420,innerWidth-28);const left=Math.max(14,Math.min(innerWidth-wide-14,r.left+r.width/2-wide/2));overlay.style.left=left+'px';if(innerWidth>760){overlay.style.bottom='auto';const height=overlay.offsetHeight||180;const above=r.top-height-12;overlay.style.top=(above>=10?above:Math.min(innerHeight-height-10,r.bottom+12))+'px'}}
+ function show(btn){const bubble=btn.parentElement.querySelector('.info-bubble');if(!bubble)return;active=btn;overlay.textContent=bubble.textContent;overlay.classList.add('is-visible');place(btn)}
+ function hide(){active=null;overlay.classList.remove('is-visible')}
+ tips.forEach(btn=>{btn.addEventListener('mouseenter',()=>show(btn));btn.addEventListener('mouseleave',()=>{if(!btn.closest('.info-wrap').classList.contains('is-open'))hide()});btn.addEventListener('focus',()=>show(btn));btn.addEventListener('click',()=>{if(active===btn&&btn.getAttribute('aria-expanded')==='false')hide();else show(btn)})});
+ document.addEventListener('click',e=>{if(!e.target.closest('.detailed-table .info-wrap'))hide()});document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});window.addEventListener('resize',()=>{if(active)place(active)});document.addEventListener('scroll',()=>{if(active)place(active)},true);
+})();
+</script></body></html>
