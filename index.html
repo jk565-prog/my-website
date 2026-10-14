@@ -154,6 +154,17 @@
 .calculator-settings-details[open]>summary{border-bottom:1px solid #2c405a}
 .calculator-settings-details .controls-frame{margin:0;border:0;border-radius:0;background:transparent;}
 @media(max-width:760px){.calculator-settings-details>summary{padding:15px 13px}}
+</style><style id="mobile-safe-sliders">
+/* On touch devices, a deliberate tap on 'Uredi drsnik' is required before dragging.
+   Touches on locked tracks pass through to normal vertical page scrolling. */
+.mobile-slider-enable{display:none}
+@media (pointer:coarse){
+  input[type="range"].touch-slider-locked{pointer-events:none!important;touch-action:pan-y!important;opacity:.76}
+  input[type="range"].touch-slider-active{pointer-events:auto!important;touch-action:none!important;opacity:1}
+  .mobile-slider-enable{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:9px 0 13px;padding:8px 13px;min-height:44px;border:1px solid #6a87ac;border-radius:9px;background:#203652;color:#f4f7ff;font:600 .87rem system-ui,-apple-system,sans-serif;cursor:pointer}
+  .mobile-slider-enable:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .mobile-slider-enable.is-active{background:var(--gold);color:#132033;border-color:var(--gold)}
+}
 </style></head><body><header class="wrap"><nav><span class="brand">LOTO / MATEMATIKA</span><a href="#kalkulator">Odpri kalkulator ↓</a></nav><div class="eyebrow">Informacije za potencialne igralce</div><h1>Koliko stane <span style="color:var(--gold)">upanje?</span></h1><p class="lead">Loto omogoča izjemen dobitek za majhno vplačilo. A možnost zmage, delitev nagrad in pričakovana izguba povedo povsem drugo zgodbo.</p><span class="pill">Slovenski Loto · osnovna igra brez Loto plus in Jokerja</span><div class="hero-number"><span class="dim">Možnost zadetka Šestice z eno kombinacijo</span><strong>1 : 7.059.052</strong><span class="dim">Le približno 0,0000142 %</span></div></header><main class="wrap">
 <section id="pravila"><div class="eyebrow">01 / Pravila</div><h2>Kako deluje Loto?</h2><p>Igralec izbere <b>šest različnih številk od 1 do 44</b>. Posamezna kombinacija stane <b>0,60 €</b>. Ob sredah in nedeljah izžrebajo šest glavnih številk in eno dodatno številko. Obstaja osem vrst dobitkov: 6, 5 + 1, 5, 4 + 1, 4, 3 + 1, 3 in 0 + 1.</p><div class="statgrid"><div class="card"><div class="label">Cena kombinacije</div><strong class="big">0,60 €</strong><span class="tiny">Brez dodatnih iger</span></div><div class="card"><div class="label">Možnih kombinacij</div><strong class="big">7.059.052</strong><span class="tiny">Matematični izraz <span class="tex" data-fallback="44 izberemo 6">\(\binom{44}{6}\)</span></span></div><div class="card"><div class="label">Dobitnih kategorij</div><strong class="big">8</strong><span class="tiny">Od Šestice do 0 + 1</span></div></div><p style="margin-top:20px">Če Šestice nihče ne zadene, se sklad prenese v prihodnje žrebanje. <b>Ne prenese pa se že plačana kombinacija</b>, razen če je igralec vnaprej plačal tudi naslednje kroge.</p></section>
 <section><div class="eyebrow">02 / Verjetnosti</div><h2>Dobitek je redek. Delitev je realna.</h2>
@@ -430,5 +441,28 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInfo()});
  function hide(){active=null;overlay.classList.remove('is-visible')}
  tips.forEach(btn=>{btn.addEventListener('mouseenter',()=>show(btn));btn.addEventListener('mouseleave',()=>{if(!btn.closest('.info-wrap').classList.contains('is-open'))hide()});btn.addEventListener('focus',()=>show(btn));btn.addEventListener('click',()=>{if(active===btn&&btn.getAttribute('aria-expanded')==='false')hide();else show(btn)})});
  document.addEventListener('click',e=>{if(!e.target.closest('.detailed-table .info-wrap'))hide()});document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});window.addEventListener('resize',()=>{if(active)place(active)});document.addEventListener('scroll',()=>{if(active)place(active)},true);
+})();
+</script><script id="mobile-safe-sliders-script">
+(function(){
+  const touch=window.matchMedia('(pointer: coarse)');
+  const states=[];
+  document.querySelectorAll('input[type="range"]').forEach((slider,i)=>{
+    const btn=document.createElement('button');
+    btn.type='button'; btn.className='mobile-slider-enable';
+    btn.textContent='↔ Uredi drsnik';
+    btn.setAttribute('aria-label','Omogoči premikanje drsnika: '+(slider.getAttribute('aria-label')||document.querySelector('label[for="'+slider.id+'"]')?.textContent.trim()||'nastavitev'));
+    slider.insertAdjacentElement('afterend',btn);
+    const item={slider,btn,active:false};states.push(item);
+    function lock(){item.active=false;slider.classList.remove('touch-slider-active');slider.classList.add('touch-slider-locked');btn.classList.remove('is-active');btn.textContent='↔ Uredi drsnik';}
+    function unlock(){states.forEach(x=>{if(x!==item&&x.active){x.active=false;x.slider.classList.add('touch-slider-locked');x.slider.classList.remove('touch-slider-active');x.btn.classList.remove('is-active');x.btn.textContent='↔ Uredi drsnik'}});item.active=true;slider.classList.remove('touch-slider-locked');slider.classList.add('touch-slider-active');btn.classList.add('is-active');btn.textContent='Povleci vodoravno';}
+    btn.addEventListener('click',()=>{if(!touch.matches)return; if(item.active)lock();else unlock();});
+    slider.addEventListener('pointerup',e=>{if(touch.matches&&item.active&&e.pointerType!=='mouse')setTimeout(lock,100)});
+    slider.addEventListener('pointercancel',()=>{if(touch.matches&&item.active)lock()});
+    slider.addEventListener('touchend',()=>{if(touch.matches&&item.active)setTimeout(lock,130)},{passive:true});
+    item.lock=lock;
+    if(touch.matches) lock();
+  });
+  touch.addEventListener('change',()=>{states.forEach(x=>{if(touch.matches)x.lock();else{x.slider.classList.remove('touch-slider-locked','touch-slider-active');x.btn.classList.remove('is-active')}})});
+  document.querySelectorAll('.reset-control').forEach(btn=>btn.addEventListener('click',()=>states.forEach(x=>x.lock())));
 })();
 </script></body></html>
